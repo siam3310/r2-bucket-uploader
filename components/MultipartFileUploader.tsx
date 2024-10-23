@@ -16,6 +16,35 @@ const fetchUploadApiEndpoint = async (endpoint: string, data: any) => {
       accept: "application/json",
       "Content-Type": "application/json",
     },
+    .use(RemoteSources, {
+    companionUrl: COMPANION_URL,
+    sources: [
+      'Box',
+      'Dropbox',
+      'Facebook',
+      'GoogleDrive',
+      'Instagram',
+      'OneDrive',
+      'Unsplash',
+      'Url',
+    ],
+    companionAllowedHosts,
+  })
+  .use(Webcam, {
+    target: Dashboard,
+    showVideoSourceDropdown: true,
+    showRecordingLength: true,
+  })
+  .use(Audio, {
+    target: Dashboard,
+    showRecordingLength: true,
+  })
+  .use(ScreenCapture, { target: Dashboard })
+  .use(ImageEditor, { target: Dashboard })
+  .use(DropTarget, {
+    target: document.body,
+  })
+  .use(Compressor);
   });
 
   return res.json();
